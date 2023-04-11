@@ -5,17 +5,17 @@
     try{      
     Socket s=new Socket("localhost",6666);  
     DataOutputStream send=new DataOutputStream(s.getOutputStream());
-    DataInputStream receive=new DataInputStream(s.getInputStream());
+    BufferedReader receive=new BufferedReader(new InputStreamReader(s.getInputStream()));
     
-    send.writeUTF("HELO");
+    send.write(("HELO\n").getBytes());
     System.out.println("HELO");
     String str="";
     
     while(!str.equals("BYE")){
-    str=receive.readUTF();
+    str=receive.readLine();
     if(str.equals("G'DAY")){
     System.out.println("server says: G'DAY");
-    send.writeUTF("BYE");
+    send.write(("BYE\n").getBytes());
     System.out.println("BYE");
     }
     }
